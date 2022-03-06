@@ -1,4 +1,4 @@
-export interface PayloadJwt {
+export interface IPayloadJwt {
   id: number,
   username: string,
 }
