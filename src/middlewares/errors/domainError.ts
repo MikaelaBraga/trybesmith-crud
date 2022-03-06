@@ -5,8 +5,8 @@ const errorMap: IDomainErrorMap = {
   unauthorized: 401,
 };
 
-export default (err, req: Request, res: Response, next: NextFunction) => {
+export default (err: Error, req: Request, res: Response, next: NextFunction) => {
   if (!err.message) return next();
 
-  return res.status(errorMap[err.code]).json({ error: err.message });
+  return res.status(errorMap[err.name]).json({ error: err.message });
 };

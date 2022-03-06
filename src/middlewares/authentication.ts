@@ -1,8 +1,8 @@
-import { RequestHandler } from 'express';
+import { Request, Response, NextFunction } from 'express';
 import errorConstructor from '../utils/errorConstructor';
 import { verifyToken } from '../utils/jwt';
 
-export const auth: RequestHandler = (req, res, next) => {
+export default (req: Request, res: Response, next: NextFunction) => {
   const token = req.headers.authorization;
 
   if (!token) throw errorConstructor('unauthorized', 'Token not found');
