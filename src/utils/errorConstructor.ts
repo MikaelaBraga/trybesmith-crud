@@ -1,0 +1,1 @@
+export default (code: string, message: string) => ({ code, message });

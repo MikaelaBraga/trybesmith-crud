@@ -1,8 +1,9 @@
 import { JwtPayload, sign, verify } from 'jsonwebtoken';
+import { PayloadJwt } from '../interfaces/PayloadJwt';
 
 const JWT_SECRET = 'senhasecreta';
 
-export const generateToken = (payload) => sign(payload, JWT_SECRET, {
+export const generateToken = (payload: PayloadJwt) => sign(payload, JWT_SECRET, {
   algorithm: 'HS256',
   expiresIn: '1h',
 });
