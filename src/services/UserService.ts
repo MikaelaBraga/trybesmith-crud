@@ -1,6 +1,11 @@
 import { add } from '../models/UserModel';
-import { IUser } from '../interfaces/IUser';
+import { User } from '../interfaces/IUser';
+import { generateToken } from '../utils/jwt';
 
-const createUser = async (user: IUser) => {
-  const user = await add(user);
+export const createUser = async (user: User) => {
+  const users = await add(user);
+
+  const token = generateToken(users);
+
+  return token;
 };
