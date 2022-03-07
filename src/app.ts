@@ -5,6 +5,7 @@ import routeProduct from './controllers/ProductController';
 import routeUser from './controllers/UserController';
 import domainError from './middlewares/errors/domainError';
 import joiError from './middlewares/errors/joiError';
+import serverError from './middlewares/errors/serverError';
 
 const app = express();
 dotenv.config();
@@ -18,5 +19,6 @@ app.use('/products', routeProduct);
 
 app.use(joiError);
 app.use(domainError);
+app.use(serverError);
 
 export default app;

@@ -7,8 +7,12 @@ export default (req: Request, res: Response, next: NextFunction) => {
 
   if (!token) throw errorConstructor('unauthorized', 'Token not found');
 
-  const { id } = verifyToken(token);
-  req.body.id = id;
-
-  return next();
+  try {
+    const { id } = verifyToken(token);
+    req.body.id = id;
+  
+    return next(); 
+  } catch (error) {
+    return res.status(401).json({ error: 'Invalid token' });
+  }
 };
