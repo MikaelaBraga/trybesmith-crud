@@ -10,6 +10,7 @@ const routeProduct = Router();
 routeProduct.post('/', authentication, rescue(async (req, res) => {
   validateJoiProduct(req.body);
   const product = await createProduct(req.body);
+  // console.log(req.body);
 
   return res.status(201).json({ item: product });
 }));
