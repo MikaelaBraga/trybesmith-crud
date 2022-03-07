@@ -5,6 +5,7 @@ import { login } from '../services/UserService';
 
 const routeLogin = Router();
 
+// verificar -> tipagem dos parametros req e res dando erro
 routeLogin.post('/', rescue(async (req, res) => {
   validateJoiLogin(req.body);
   const { username, password } = req.body;
