@@ -1,4 +1,3 @@
-import { strict } from 'assert';
 import Joi from 'joi';
 import { User } from '../interfaces/IUser';
 
