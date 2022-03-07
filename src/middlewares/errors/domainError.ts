@@ -3,6 +3,7 @@ import { IDomainErrorMap } from '../../interfaces/IDomainErrorMap';
 
 const errorMap: IDomainErrorMap = {
   unauthorized: 401,
+  notFound: 404,
 };
 
 export default (err: Error, req: Request, res: Response, next: NextFunction) => {

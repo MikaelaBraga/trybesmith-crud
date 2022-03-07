@@ -1,10 +1,17 @@
 import { Order } from '../interfaces/IOrder';
-import { add } from '../models/OrderModel';
+import { add, getById } from '../models/OrderModel';
+import errorConstructor from '../utils/errorConstructor';
 
 export const createOrder = async (order: Order) => {
   await add(order);
 };
 
-export const getAllOrders = () => {};
+export const getOrderById = async (id: string) => {
+  const order = await getById(id);
 
-export const getOrderById = () => {};
+  if (!order) throw errorConstructor('notFound', 'Order not found');
+
+  return order;
+};
+
+export const getAllOrders = () => {};

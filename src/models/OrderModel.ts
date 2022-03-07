@@ -1,4 +1,4 @@
-import { OkPacket } from 'mysql2';
+import { OkPacket, RowDataPacket } from 'mysql2';
 import { Order } from '../interfaces/IOrder';
 import connection from './connection';
 
@@ -19,6 +19,24 @@ export const add = async (order: Order) => {
   return Promise.all(updateProduct).then(() => insertId);
 };
 
-export const getAll = async () => {};
+export const getById = async (id: string) => {
+  const queryString = `
+  SELECT ord.id, ord.userId, prod.id as products
+  FROM Trybesmith.Orders AS ord
+  INNER JOIN Trybesmith.Products AS prod
+  ON prod.orderId = ord.id
+  WHERE ord.id = ?`;
 
-// export const getById = async (id: string) => {};
+  const [result] = await connection.query<RowDataPacket[]>(queryString, [id]);
+  if (!result.length) return null;
+
+  const order: Order = {
+    id: result[0].id,
+    userId: result[0].userId,
+    products: result.map((p) => p.products),
+  };
+
+  return order;
+};
+
+export const getAll = async () => {};
