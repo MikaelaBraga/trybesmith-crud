@@ -1,11 +1,12 @@
 import { Router } from 'express';
 import rescue from 'express-rescue';
+import validateJoiLogin from '../middlewares/validateJoiLogin';
 import { login } from '../services/UserService';
-// import authentication from '../middlewares/authentication';
 
 const routeLogin = Router();
 
 routeLogin.post('/', rescue(async (req, res) => {
+  validateJoiLogin(req.body);
   const { username, password } = req.body;
   const user = await login(username, password);
 
