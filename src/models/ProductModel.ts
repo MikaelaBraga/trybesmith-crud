@@ -13,4 +13,8 @@ export const add = async (product: Product) => {
   return { id: insertId, name, amount };
 };
 
-export const getAll = async () => {};
+export const getAll = async () => {
+  const [queryString] = await connection.query('SELECT * FROM Trybesmith.Products');
+
+  return queryString as RowDataPacket[];
+};

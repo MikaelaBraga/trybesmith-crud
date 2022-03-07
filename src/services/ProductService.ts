@@ -1,6 +1,6 @@
 import { Product } from '../interfaces/IProduct';
-import { add } from '../models/ProductModel';
+import { add, getAll } from '../models/ProductModel';
 
 export const createProduct = async (product: Product) => add(product);
 
-export const getAllProducts = async () => {};
+export const getAllProducts = async () => getAll();

@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import rescue from 'express-rescue';
-import { createProduct } from '../services/ProductService';
+import { createProduct, getAllProducts } from '../services/ProductService';
 import authentication from '../middlewares/authentication';
 import validateJoiProduct from '../middlewares/validateJoiProduct';
 
@@ -13,6 +13,13 @@ routeProduct.post('/', authentication, rescue(async (req, res) => {
   // console.log(req.body);
 
   return res.status(201).json({ item: product });
+}));
+
+// verificar -> tipagem dos parametros req e res dando erro
+routeProduct.get('/', authentication, rescue(async (req, res) => {
+  const products = await getAllProducts();
+
+  return res.status(200).json(products);
 }));
 
 export default routeProduct;
