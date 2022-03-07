@@ -1,14 +1,16 @@
-import { OkPacket, RowDataPacket } from 'mysql2';
+import { ResultSetHeader, RowDataPacket } from 'mysql2';
 import { Order } from '../interfaces/IOrder';
 import connection from './connection';
 
+// arrumar função de adicionar Order
 export const add = async (order: Order) => {
-  const { userId } = order;
+  const { id: userId } = order;
+  // console.log(order);
+  
   const queryString = 'INSERT INTO Trybesmith.Orders (userId) VALUES (?)';
 
-  const [result] = await connection.query(queryString, [userId]);
-
-  const { insertId } = result as OkPacket;
+  // verificar -> a função de adicionar o orderId em Products não está funcionando corretamente
+  const [{ insertId }] = await connection.query<ResultSetHeader>(queryString, [userId]);
 
   // atualiza orderId da tabela products quando um pedido é feito
   const updateProduct = order.products.map(async (p) => {
@@ -28,9 +30,11 @@ export const getById = async (id: string) => {
   WHERE ord.id = ?`;
 
   const [result] = await connection.query<RowDataPacket[]>(queryString, [id]);
+  // console.log(result);
+  
   if (!result.length) return null;
 
-  const order: Order = {
+  const order = {
     id: result[0].id,
     userId: result[0].userId,
     products: result.map((p) => p.products),
@@ -39,4 +43,10 @@ export const getById = async (id: string) => {
   return order;
 };
 
-export const getAll = async () => {};
+export const getAll = async () => {
+  const [queryString] = await connection.query<RowDataPacket[]>('SELECT id FROM Trybesmith.Orders');
+
+  const result = queryString.map(async (orderId) => getById(orderId.id));
+
+  return Promise.all(result);
+};
