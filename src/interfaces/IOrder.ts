@@ -6,6 +6,6 @@ export interface IOrder {
 }
 
 export interface Order extends IOrder {
-  products: IProduct[],
-  userId: IUser[],
+  products: IProduct[], // array dos produtos
+  userId: IUser,
 }
